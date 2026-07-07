@@ -1,0 +1,375 @@
+/* City Metro Transit Museum — shared styles
+   Font: Helvetica, per house style. White background throughout. */
+
+:root{
+  --navy:#0b2f4f;
+  --navy-dark:#081f36;
+  --red:#c8102e;
+  --gray-line:#dcdfe3;
+  --gray-text:#4a4f55;
+  --ink:#151a1e;
+  --amber:#fff4d6;
+  --amber-border:#e6b800;
+}
+
+*{ box-sizing:border-box; }
+
+html,body{
+  margin:0;
+  padding:0;
+  background:#ffffff;
+  color:var(--ink);
+  font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+
+a{ color:inherit; text-decoration:none; }
+img{ max-width:100%; display:block; }
+
+/* ---------- Closure banner ---------- */
+.closure-banner{
+  background:var(--amber);
+  border-bottom:1px solid var(--amber-border);
+  color:#5c4400;
+  padding:10px 20px;
+  font-size:14px;
+  text-align:center;
+  line-height:1.5;
+}
+.closure-banner strong{ color:#3d2e00; }
+
+/* ---------- Header / nav ---------- */
+header.site-header{
+  border-bottom:1px solid var(--gray-line);
+  background:#fff;
+}
+.header-inner{
+  max-width:1120px;
+  margin:0 auto;
+  padding:16px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.brand img{ width:44px; height:44px; }
+.brand .brand-text{ line-height:1.15; }
+.brand .brand-text .line1{
+  font-weight:700;
+  font-size:15px;
+  letter-spacing:.2px;
+}
+.brand .brand-text .line2{
+  font-size:12px;
+  color:var(--gray-text);
+  letter-spacing:.6px;
+  text-transform:uppercase;
+}
+nav.main-nav ul{
+  list-style:none;
+  display:flex;
+  gap:26px;
+  margin:0;
+  padding:0;
+}
+nav.main-nav a{
+  font-size:14px;
+  font-weight:600;
+  color:var(--navy);
+  padding:6px 2px;
+  border-bottom:2px solid transparent;
+}
+nav.main-nav a:hover,
+nav.main-nav a.active{
+  border-bottom:2px solid var(--red);
+}
+.nav-toggle{ display:none; }
+
+@media (max-width:760px){
+  .header-inner{ flex-wrap:wrap; }
+  nav.main-nav ul{
+    flex-wrap:wrap;
+    gap:14px 18px;
+    width:100%;
+    padding-top:10px;
+    border-top:1px solid var(--gray-line);
+  }
+}
+
+/* ---------- Hero ---------- */
+.hero{
+  background:var(--navy);
+  color:#fff;
+  padding:64px 20px;
+}
+.hero-inner{
+  max-width:1120px;
+  margin:0 auto;
+}
+.eyebrow{
+  text-transform:uppercase;
+  letter-spacing:2px;
+  font-size:12px;
+  font-weight:700;
+  color:#a9c2d8;
+  margin:0 0 14px;
+}
+.hero h1{
+  font-size:clamp(30px,5vw,52px);
+  margin:0 0 16px;
+  font-weight:800;
+  line-height:1.05;
+}
+.hero p{
+  max-width:640px;
+  font-size:17px;
+  line-height:1.6;
+  color:#dbe6ef;
+  margin:0 0 26px;
+}
+.hero .addr{
+  font-size:14px;
+  color:#a9c2d8;
+}
+.btn{
+  display:inline-block;
+  background:var(--red);
+  color:#fff;
+  font-weight:700;
+  font-size:14px;
+  padding:12px 22px;
+  border-radius:3px;
+  border:1px solid var(--red);
+}
+.btn:hover{ background:#a70d25; border-color:#a70d25; }
+.btn.secondary{
+  background:transparent;
+  border:1px solid #ffffff66;
+  color:#fff;
+}
+.btn.secondary:hover{ border-color:#fff; }
+
+/* ---------- Sections ---------- */
+main{ max-width:1120px; margin:0 auto; padding:56px 20px; }
+section + section{ margin-top:64px; }
+h2.section-title{
+  font-size:28px;
+  font-weight:800;
+  margin:0 0 8px;
+  color:var(--navy);
+}
+p.section-sub{
+  color:var(--gray-text);
+  font-size:15px;
+  margin:0 0 32px;
+  max-width:720px;
+  line-height:1.6;
+}
+
+/* ---------- Exhibit cards ---------- */
+.exhibit{
+  display:grid;
+  grid-template-columns:1.1fr 1fr;
+  gap:36px;
+  align-items:center;
+  padding:32px 0;
+  border-top:1px solid var(--gray-line);
+}
+.exhibit:first-of-type{ border-top:none; }
+.exhibit.reverse .exhibit-media{ order:2; }
+.exhibit.reverse .exhibit-copy{ order:1; }
+.exhibit-media img{
+  width:100%;
+  border-radius:4px;
+  border:1px solid var(--gray-line);
+}
+.exhibit-media .cap{
+  font-size:12px;
+  color:var(--gray-text);
+  margin-top:8px;
+}
+.exhibit-copy .tag{
+  display:inline-block;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--red);
+  margin-bottom:10px;
+}
+.exhibit-copy h3{
+  font-size:22px;
+  margin:0 0 10px;
+  color:var(--ink);
+}
+.exhibit-copy p{
+  font-size:15px;
+  line-height:1.65;
+  color:var(--gray-text);
+  margin:0 0 14px;
+}
+.spec-list{
+  list-style:none;
+  margin:14px 0 0;
+  padding:0;
+  font-size:13px;
+  color:var(--navy);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px 20px;
+}
+.spec-list li strong{ display:block; color:var(--gray-text); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.4px;}
+
+@media (max-width:760px){
+  .exhibit, .exhibit.reverse{ grid-template-columns:1fr; }
+  .exhibit.reverse .exhibit-media{ order:1; }
+  .exhibit.reverse .exhibit-copy{ order:2; }
+}
+
+/* ---------- Cards grid (about/visit pages) ---------- */
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+.card{
+  border:1px solid var(--gray-line);
+  border-radius:4px;
+  padding:22px;
+}
+.card h3{ margin:0 0 8px; font-size:16px; color:var(--navy); }
+.card p{ margin:0; font-size:14px; color:var(--gray-text); line-height:1.6; }
+
+/* ---------- Forms ---------- */
+.form-card{
+  border:1px solid var(--gray-line);
+  border-radius:6px;
+  padding:28px;
+  max-width:640px;
+}
+.field{ margin-bottom:18px; }
+.field label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:6px;
+  color:var(--navy);
+}
+.field select, .field input{
+  width:100%;
+  padding:10px 12px;
+  border:1px solid var(--gray-line);
+  border-radius:3px;
+  font-size:14px;
+  font-family:inherit;
+}
+.price-line{
+  display:flex;
+  justify-content:space-between;
+  font-size:14px;
+  padding:10px 0;
+  border-top:1px solid var(--gray-line);
+}
+.price-line.total{ font-weight:800; font-size:16px; }
+.notice{
+  font-size:13px;
+  color:var(--gray-text);
+  background:#f4f6f8;
+  border:1px solid var(--gray-line);
+  border-radius:4px;
+  padding:14px 16px;
+  margin-top:20px;
+  line-height:1.6;
+}
+.ticket-out{
+  border:2px dashed var(--navy);
+  border-radius:6px;
+  padding:24px;
+  margin-top:24px;
+  display:none;
+}
+.ticket-out.show{ display:block; }
+.ticket-out .t-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  border-bottom:1px dashed var(--gray-line);
+  padding-bottom:14px;
+  margin-bottom:14px;
+}
+.ticket-out .t-head .agency{ font-weight:800; color:var(--navy); font-size:15px;}
+.ticket-out .t-head .kind{ font-weight:800; color:var(--red); font-size:22px; text-transform:uppercase;}
+.ticket-row{ display:flex; justify-content:space-between; font-size:13px; padding:4px 0; color:var(--gray-text);}
+.ticket-row strong{ color:var(--ink); }
+.ticket-num{ font-family:"Courier New",monospace; letter-spacing:1px; }
+
+/* ---------- Events ---------- */
+.event-card{
+  border:1px solid var(--gray-line);
+  border-radius:6px;
+  padding:24px;
+  margin-bottom:18px;
+}
+.event-card.featured{
+  border-color:var(--red);
+  background:#fff7f7;
+}
+.event-date{
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.6px;
+  text-transform:uppercase;
+  color:var(--red);
+  margin-bottom:8px;
+}
+.event-card h3{ margin:0 0 8px; font-size:19px; color:var(--navy); }
+.event-card p{ margin:0 0 10px; font-size:14px; line-height:1.65; color:var(--gray-text); }
+.event-meta{
+  font-size:12px;
+  color:var(--gray-text);
+  border-top:1px solid var(--gray-line);
+  padding-top:10px;
+  margin-top:10px;
+}
+.event-meta span{ margin-right:16px; }
+
+/* ---------- Footer ---------- */
+footer.site-footer{
+  background:var(--navy-dark);
+  color:#c7d4de;
+  margin-top:80px;
+  padding:40px 20px;
+  font-size:13px;
+}
+.footer-inner{
+  max-width:1120px;
+  margin:0 auto;
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:24px;
+}
+.footer-inner a{ color:#c7d4de; }
+.footer-inner a:hover{ color:#fff; }
+.footer-col h4{
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.6px;
+  color:#7f97ab;
+  margin:0 0 12px;
+}
+.footer-col ul{ list-style:none; margin:0; padding:0; }
+.footer-col li{ margin-bottom:8px; }
+.footer-bottom{
+  max-width:1120px;
+  margin:28px auto 0;
+  padding-top:20px;
+  border-top:1px solid #1c3e58;
+  font-size:12px;
+  color:#7f97ab;
+}
