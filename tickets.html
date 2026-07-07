@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tickets | City Metro Transit Museum</title>
+<meta name="description" content="Get a novelty City Metro Transit Museum ticket. No real payment is collected.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="tickets">
+
+<div class="closure-banner">
+  <strong>Notice:</strong> The City Metro Transit Museum is temporarily closed while we complete facility maintenance. Tickets below are novelty items only — see the notice at the bottom of this page.
+</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <img src="assets/logo.png" alt="City Metro logo">
+      <span class="brand-text">
+        <span class="line1">City Metro</span>
+        <span class="line2">Transit Museum</span>
+      </span>
+    </a>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html" data-page="home">Home</a></li>
+        <li><a href="events.html" data-page="events">Events</a></li>
+        <li><a href="tickets.html" data-page="tickets">Tickets</a></li>
+        <li><a href="about.html" data-page="about">About</a></li>
+        <li><a href="visit.html" data-page="visit">Plan a Visit</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section>
+    <h2 class="section-title">Get tickets</h2>
+    <p class="section-sub">Pick a ticket type below and select "Generate ticket." Your ticket appears on screen — <strong>screenshot it</strong> to keep it. This is a novelty ticket for a fan-made site: no payment is processed and nothing is emailed to you.</p>
+
+    <div class="form-card">
+      <div class="field">
+        <label for="ticketType">Ticket type</label>
+        <select id="ticketType"></select>
+      </div>
+      <div class="field">
+        <label for="qty">Quantity</label>
+        <input type="number" id="qty" min="1" max="8" value="1">
+      </div>
+      <div class="field">
+        <label for="visitorName">Name on ticket (optional)</label>
+        <input type="text" id="visitorName" placeholder="e.g. J. Rivera">
+      </div>
+
+      <div id="priceBreakdown"></div>
+
+      <button class="btn" id="generateBtn" type="button" style="margin-top:10px;">Generate ticket</button>
+      <p id="soldOutMsg" style="display:none; color:#c8102e; font-size:13px; margin-top:10px;">This ticket type isn't being offered right now. Pick another option above.</p>
+    </div>
+
+    <div class="ticket-out" id="ticketOut">
+      <div class="t-head">
+        <div>
+          <div class="agency">CITY METRO TRANSIT MUSEUM</div>
+          <div style="font-size:12px; color:#4a4f55;">Novelty admission ticket</div>
+        </div>
+        <div class="kind" id="outKind">GA</div>
+      </div>
+      <div class="ticket-row"><span>Ticket #</span><strong class="ticket-num" id="outNum">—</strong></div>
+      <div class="ticket-row"><span>Name</span><strong id="outName">Guest</strong></div>
+      <div class="ticket-row"><span>Quantity</span><strong id="outQty">1</strong></div>
+      <div class="ticket-row"><span>Price each</span><strong id="outPrice">$0.00</strong></div>
+      <div class="ticket-row"><span>Total</span><strong id="outTotal">$0.00</strong></div>
+      <div class="ticket-row"><span>Issued</span><strong id="outDate">—</strong></div>
+      <p class="notice" style="margin-top:16px;">This is a novelty ticket, not a real transaction. <strong>Screenshot this ticket</strong> — that screenshot is your "admission." Nothing was charged, saved, or emailed.</p>
+    </div>
+
+    <p class="notice">
+      Heads up: <strong>tickets for the Wednesday, July 8 shuttle service to City Bank Stadium require a City Metro Special Event Ticket</strong>, not a general admission ticket. See the <a href="events.html">Events page</a> for the full schedule.
+    </p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>City Metro Transit Museum</h4>
+      <ul>
+        <li>100 S Death Star City Dr</li>
+        <li>Death Star City, Republic States</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Visit</h4>
+      <ul>
+        <li><a href="visit.html">Hours &amp; directions</a></li>
+        <li><a href="tickets.html">Get tickets</a></li>
+        <li><a href="events.html">Events</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>About</h4>
+      <ul>
+        <li><a href="about.html">Our story</a></li>
+        <li><a href="index.html#exhibits">Exhibits</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    A fan-made project for the Lego City County transit universe. Not a real museum — no real tickets, payments, or events. &copy; 2026 City Metro Transit Museum.
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+/* =========================================================================
+   TICKET CONFIG — edit this block by hand to change what's for sale.
+   - "available": true shows the ticket in the dropdown, false hides it.
+   - "price": shown on the generated ticket and used for the total.
+   Add more ticket types by copying an object into the array.
+   ========================================================================= */
+const TICKET_CONFIG = [
+  { id: "ga",      label: "General Admission", price: 10, available: true },
+  { id: "special", label: "Special Event Ticket (Jul 8 shuttle)", price: 15, available: true }
+];
+/* ========================================================================= */
+
+const typeSelect = document.getElementById('ticketType');
+const priceBreakdown = document.getElementById('priceBreakdown');
+const soldOutMsg = document.getElementById('soldOutMsg');
+const generateBtn = document.getElementById('generateBtn');
+
+function renderOptions() {
+  typeSelect.innerHTML = '';
+  const offered = TICKET_CONFIG.filter(t => t.available);
+  if (offered.length === 0) {
+    const opt = document.createElement('option');
+    opt.textContent = 'No tickets currently offered';
+    typeSelect.appendChild(opt);
+    generateBtn.disabled = true;
+    soldOutMsg.style.display = 'block';
+    return;
+  }
+  TICKET_CONFIG.forEach(t => {
+    const opt = document.createElement('option');
+    opt.value = t.id;
+    opt.textContent = t.available ? `${t.label} — $${t.price.toFixed(2)}` : `${t.label} — not currently offered`;
+    opt.disabled = !t.available;
+    typeSelect.appendChild(opt);
+  });
+}
+
+function currentTicket() {
+  return TICKET_CONFIG.find(t => t.id === typeSelect.value);
+}
+
+function updateBreakdown() {
+  const t = currentTicket();
+  const qty = Math.max(1, parseInt(document.getElementById('qty').value || '1', 10));
+  if (!t) { priceBreakdown.innerHTML = ''; return; }
+  const total = (t.price * qty).toFixed(2);
+  priceBreakdown.innerHTML = `
+    <div class="price-line"><span>${t.label}</span><span>$${t.price.toFixed(2)} × ${qty}</span></div>
+    <div class="price-line total"><span>Total</span><span>$${total}</span></div>
+  `;
+}
+
+typeSelect.addEventListener('change', updateBreakdown);
+document.getElementById('qty').addEventListener('input', updateBreakdown);
+
+generateBtn.addEventListener('click', function () {
+  const t = currentTicket();
+  if (!t || !t.available) return;
+  const qty = Math.max(1, parseInt(document.getElementById('qty').value || '1', 10));
+  const name = document.getElementById('visitorName').value.trim() || 'Guest';
+  const ticketNum = 'CMTM-' + Math.floor(100000 + Math.random() * 900000);
+  const now = new Date();
+
+  document.getElementById('outKind').textContent = t.id === 'special' ? 'Special Event' : 'General Admission';
+  document.getElementById('outNum').textContent = ticketNum;
+  document.getElementById('outName').textContent = name;
+  document.getElementById('outQty').textContent = qty;
+  document.getElementById('outPrice').textContent = '$' + t.price.toFixed(2);
+  document.getElementById('outTotal').textContent = '$' + (t.price * qty).toFixed(2);
+  document.getElementById('outDate').textContent = now.toLocaleString();
+
+  document.getElementById('ticketOut').classList.add('show');
+  document.getElementById('ticketOut').scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
+
+renderOptions();
+updateBreakdown();
+</script>
+</body>
+</html>
